@@ -12,6 +12,12 @@ class Sec {
         this.methods = v.methods;
     }
 
+    scanAttributes(node){
+        node.attributes;
+        Array.from([]);
+        //name value
+    }
+
     scan(node) {
         if (node === this.el || !node.getAttribute('sec-li')) {
 
