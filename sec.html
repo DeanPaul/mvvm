@@ -6,34 +6,34 @@
     <script src="Sec.js"></script>
 </head>
 <body>
-    <div id="app">
-        <div>test: {{ message }} jaja {{ hi }}</div>
-        <input value="{{ message }}" type="text"/>
-        <div sec-on:click="greet">{{ paul }}</div>
-    </div>
+<div id="app">
+    <div>test: {{ message }} jaja {{ hi }}</div>
+    <input value="{{ message }}" type="text"/>
+    <div sec-on:click="greet">{{ paul }}</div>
+</div>
 
-    <script>
+<script>
 
     var app = new Sec({
-      el: '#app',
-      data: {
-        message: 'Hello Sec!',
-        hi : '==========okokokokok===========',
-        paul:'Paul'
-      },
-       // 在 `methods` 对象中定义方法
-      methods: {
-        greet: function (event) {
-          // `this` 在方法里指向当前 Vue 实例
-          alert('Hello ' + this.paul + '!')
-          // `event` 是原生 DOM 事件
-          if (event) {
-            alert(event.target.tagName)
-          }
+        el: '#app',
+        data: {
+            message: 'Hello Sec!',
+            hi: '==========okokokokok===========',
+            paul: 'Paul'
+        },
+        // 在 `methods` 对象中定义方法
+        methods: {
+            greet: function (event) {
+                // `this` 在方法里指向当前 Vue 实例
+                alert('Hello ' + this.paul + '!')
+                // `event` 是原生 DOM 事件
+                if (event) {
+                    alert(event.target.tagName)
+                }
+            }
         }
-      }
     })
 
-    </script>
+</script>
 </body>
 </html>
