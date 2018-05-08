@@ -5,17 +5,24 @@ class Sec {
         }
         this.data = v.data;
         this.el = document.querySelector(v.el);
+        this.methods = v.methods;
+        for(let method in this.methods) {
+            this.methods[method] = this.methods[method].bind(this.data)
+        }
         this.$register = new Register();
         this.scan(this.el);
         this.transformToString = this.transformToString.bind(this)
         this.$register.build();
-        this.methods = v.methods;
+
+
+//        console.log(this.methods.greet())
     }
 
     scanAttributes(node){
-        node.attributes;
-        Array.from([]);
-        //name value
+        let attrs = node.attributes;
+        let events = [];
+        Array.from(attrs).forEach( attr => attr.name.indexOf('sec-on') >= 0 && events.push(attr))
+        return events;
     }
 
     scan(node) {
@@ -77,7 +84,33 @@ class Sec {
         setNodeValue(isInput, result);
     }
 
-    parseEvent() {
+    parseEvent(node) {
+        let events = this.scanAttributes(node);
+        let event = events[0];
+        if(!event) return;
+        const eventName = event.name;
+        const type = eventName.substring(eventName.indexOf(':')+1);
+        const fn = this.methods[event.value];
+        if (type === 'input') {
+            let cmp = false;
+            node.addEventListener('compositionstart', () => {
+                cmp = true;
+            });
+            node.addEventListener('compositionend', () => {
+                cmp = false;
+                node.dispatchEvent(new Event('input'));
+            });
+            node.addEventListener('input', function input(e) {
+                if (!cmp) {
+                    const start = this.selectionStart;
+                    const end = this.selectionEnd;
+                    fn(e);
+                    this.setSelectionRange(start, end);
+                }
+            });
+        } else {
+            node.addEventListener(type, fn);
+        }
     }
 
     parseInnerText(str) {
