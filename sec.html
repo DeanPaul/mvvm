@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Sec Demo Page</title>
     <script src="Sec.js"></script>
 </head>
 <body>
 <div id="app">
-    <div>test: {{ message }} jaja {{ hi }}</div>
+    <div sec-on:mouseover="handler">message: {{ message }} ,I'am {{ paul }}</div>
     <input sec-on:input="sync" value="{{ message }}" type="text"/>
-    <div sec-on:click="greet">{{ paul }}</div>
+    <div sec-on:click="greet">click {{ paul }}</div>
 </div>
 
 <script>
@@ -17,22 +17,22 @@
         el: '#app',
         data: {
             message: 'Hello Sec!',
-            hi: '==========okokokokok===========',
-            paul: 'Paul'
+            paul: 'Paul',
+            overme: 'overme'
         },
-        // 在 `methods` 对象中定义方法
         methods: {
             greet: function (event) {
-                // `this` 在方法里指向当前 Sec 实例
                 alert('Hello ' + this.paul + '!')
-                // `event` 是原生 DOM 事件
                 if (event) {
                     alert(event.target.tagName)
                 }
             },
             sync: function(event){
                 this.message = event.target.value;
-            }
+            },
+            handler:function(event){
+                console.log(this.overme);
+            },
         }
     })
 </script>
