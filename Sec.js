@@ -1,4 +1,3 @@
-
 class Sec {
     constructor(v) {
         if (!v.el || !v.data) {
@@ -7,7 +6,7 @@ class Sec {
         this.data = v.data;
         this.el = document.querySelector(v.el);
         this.methods = v.methods;
-        for(let method in this.methods) {
+        for (let method in this.methods) {
             this.methods[method] = this.methods[method].bind(this.data)
         }
         this.observer = new Observer();
@@ -23,9 +22,9 @@ class Sec {
         return this.data;
     }
 
-    _scanEvents(node){
+    _scanEvents(node) {
         let events = [];
-        Array.from(node.attributes).forEach( attr => attr.name.indexOf('sec-on') >= 0 && events.push(attr))
+        Array.from(node.attributes).forEach(attr => attr.name.indexOf('sec-on') >= 0 && events.push(attr))
         return events;
     }
 
@@ -84,12 +83,12 @@ class Sec {
     }
 
     _parseEvents(node) {
-        this._scanEvents(node).forEach(event => this._parseEvent(node,event))
+        this._scanEvents(node).forEach(event => this._parseEvent(node, event))
     }
 
-    _parseEvent(node,event){
+    _parseEvent(node, event) {
         const eventName = event.name;
-        const type = eventName.substring(eventName.indexOf(':')+1);
+        const type = eventName.substring(eventName.indexOf(':') + 1);
         const fn = this.methods[event.value];
         if (type === 'input') {
             let cmp = false;
@@ -136,13 +135,6 @@ class Sec {
     }
 
 }
-
-
-
-
-
-
-
 
 
 class Observer {
